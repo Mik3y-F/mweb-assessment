@@ -1,40 +1,18 @@
+import {
+  fetchCampaigns,
+  useCampaigns,
+} from "@/components/campaigns/campaignHooks";
 import { providerInfo } from "@/components/providers/providerInfo";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { type NextPage } from "next";
+import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
 
-type Campaign = {
-  links: string[];
-  code: string;
-  name: string;
-  description: string;
-  category: string;
-  urlSlug: string;
-  isStandardCampaign: boolean;
-  isDefaultCampaign: boolean;
-  isPrivateCampaign: boolean;
-  promoCodes: string[];
-};
-
-type CampaignResponse = {
-  campaigns: Campaign[];
-  links: string[];
-};
-
-type Campaigns = Campaign[];
-
-const Home: NextPage = () => {
-  const campaignsURL =
-    "https://apigw.mweb.co.za/prod/baas/proxy/marketing/campaigns/fibre?channels=120&visibility=public";
-
-  const fetchCampaigns = (): Promise<CampaignResponse> =>
-    axios.get<CampaignResponse>(campaignsURL).then((response) => response.data);
-
-  const { data } = useQuery({
-    queryKey: ["campaigns"],
-    queryFn: fetchCampaigns,
+const Home = (
+  props: InferGetServerSidePropsType<typeof getServerSideProps>
+) => {
+  const { campaignRes } = props;
+  const { data: campaignData } = useCampaigns({
+    initialData: campaignRes,
   });
 
   return (
@@ -65,7 +43,7 @@ const Home: NextPage = () => {
         </div>
 
         <div>
-          {data?.campaigns?.map((campaign) => (
+          {campaignData?.campaigns?.map((campaign) => (
             <div key={campaign.code}>
               <div>{campaign.name}</div>
             </div>
@@ -77,3 +55,10 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async () => {
+  // It's better UX to fetch campaigns on the server side so that the page is rendered with the filters
+  const campaignRes = await fetchCampaigns();
+
+  return { props: { campaignRes } };
+};
