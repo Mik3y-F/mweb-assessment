@@ -7,6 +7,7 @@ const config = {
     {
       extends: [
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:@tanstack/eslint-plugin-query/recommended",
       ],
       files: ["*.ts", "*.tsx"],
       parserOptions: {
@@ -18,7 +19,7 @@ const config = {
   parserOptions: {
     project: path.join(__dirname, "tsconfig.json"),
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "@tanstack/query"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   rules: {
     "@typescript-eslint/consistent-type-imports": [
@@ -29,6 +30,8 @@ const config = {
       },
     ],
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/prefer-query-object-syntax": "error",
   },
 };
 
