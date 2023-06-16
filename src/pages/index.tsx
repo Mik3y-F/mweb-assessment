@@ -1,4 +1,6 @@
+import CampaignPicker from "@/components/campaigns/CampaignPicker";
 import {
+  type Campaign,
   fetchCampaigns,
   useCampaigns,
 } from "@/components/campaigns/campaignHooks";
@@ -6,6 +8,7 @@ import { providerInfo } from "@/components/providers/providerInfo";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 
 const Home = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -14,6 +17,14 @@ const Home = (
   const { data: campaignData } = useCampaigns({
     initialData: campaignRes,
   });
+
+  const [selectedCampaign, setSelectedCampaign] = useState<string>(
+    campaignRes.campaigns[0]?.code || ""
+  );
+
+  const handleSelectedCampaignChange = (value: string) => {
+    setSelectedCampaign(value);
+  };
 
   return (
     <>
@@ -42,12 +53,12 @@ const Home = (
           ))}
         </div>
 
-        <div>
-          {campaignData?.campaigns?.map((campaign) => (
-            <div key={campaign.code}>
-              <div>{campaign.name}</div>
-            </div>
-          ))}
+        <div className="text-center">
+          <CampaignPicker
+            selectedCampaign={selectedCampaign}
+            handleSelectedCampaignChange={handleSelectedCampaignChange}
+            campaigns={campaignData?.campaigns || []}
+          />
         </div>
       </div>
     </>
