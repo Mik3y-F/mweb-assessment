@@ -3,7 +3,7 @@ import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 type CampaignPickerProps = {
-  selectedCampaign: string;
+  selectedCampaign?: string;
   handleSelectedCampaignChange: (value: string) => void;
   campaigns: Campaign[];
 };

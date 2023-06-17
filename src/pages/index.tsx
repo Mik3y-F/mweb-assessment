@@ -4,6 +4,8 @@ import {
   fetchCampaigns,
   useCampaigns,
 } from "@/components/campaigns/campaignHooks";
+import { ProductCardList } from "@/components/products/ProductCardList";
+import { useProducts } from "@/components/products/productHooks";
 import { providerInfo } from "@/components/providers/providerInfo";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
@@ -18,12 +20,20 @@ const Home = (
     initialData: campaignRes,
   });
 
-  const [selectedCampaign, setSelectedCampaign] = useState<string>(
-    campaignRes.campaigns[0]?.code || ""
-  );
+  // Preselect the first campaign (if available) retrieved from SSR
+  const [selectedCampaign, setSelectedCampaign] = useState<
+    Campaign | undefined
+  >(campaignRes.campaigns[0]);
+
+  const { products } = useProducts({
+    promoCodes: selectedCampaign?.promocodes || [],
+  });
 
   const handleSelectedCampaignChange = (value: string) => {
-    setSelectedCampaign(value);
+    const campaign = campaignData?.campaigns.find(
+      (campaign) => campaign.code === value
+    );
+    setSelectedCampaign(campaign);
   };
 
   return (
@@ -55,11 +65,12 @@ const Home = (
 
         <div className="text-center">
           <CampaignPicker
-            selectedCampaign={selectedCampaign}
+            selectedCampaign={selectedCampaign?.code}
             handleSelectedCampaignChange={handleSelectedCampaignChange}
             campaigns={campaignData?.campaigns || []}
           />
         </div>
+        <ProductCardList products={products} />
       </div>
     </>
   );

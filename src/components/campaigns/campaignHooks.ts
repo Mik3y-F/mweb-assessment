@@ -11,7 +11,7 @@ export type Campaign = {
   isStandardCampaign: boolean;
   isDefaultCampaign: boolean;
   isPrivateCampaign: boolean;
-  promoCodes: string[];
+  promocodes: string[];
 };
 
 export type CampaignResponse = {
