@@ -72,7 +72,7 @@ export type Product = {
   highlight6Icon: string;
   displayPrice?: number;
   tagLine: string;
-  id?: string;
+  id: string;
 };
 
 export type Parameter = {
@@ -123,6 +123,7 @@ export type ProductSummary = {
   productName: string;
   productRate: number;
   provider: string;
+  id: string;
 };
 
 export const getSummarizedProduct = ({
@@ -130,12 +131,13 @@ export const getSummarizedProduct = ({
   productName,
   productRate,
   subcategory,
+  id,
 }: Product): ProductSummary => {
   const provider = subcategory
     .replace("Uncapped", "")
     .replace("Capped", "")
     .trim();
-  return { productCode, productName, productRate, provider };
+  return { productCode, productName, productRate, provider, id };
 };
 
 export const getProductsFromPromo = (
@@ -169,8 +171,13 @@ export const useProducts = (params: { promoCodes: string[] }) => {
   const { data } = promoProductsQuery;
   const products = data ? data.map(getProductsFromPromo).flat() : undefined;
 
+  // Remove duplicates
+  const uniqueProducts = products?.filter(
+    (value, index, self) => self.findIndex((m) => m.id === value.id) === index
+  );
+
   return {
-    products,
+    products: uniqueProducts,
     ...promoProductsQuery,
   };
 };
