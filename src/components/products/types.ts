@@ -1,8 +1,3 @@
-import { MWEB_BASE_URL } from "@/shared/constants";
-import { useQuery } from "@tanstack/react-query";
-
-import axios from "axios";
-
 export type ProductPromoResponse = ProductPromoCode[];
 
 export type ProductPromoCode = {
@@ -127,119 +122,12 @@ export type ProductSummary = {
   id: string;
 };
 
-export const getSummarizedProduct = ({
-  productCode,
-  productName,
-  productRate,
-  subcategory,
-  id,
-}: Product): ProductSummary => {
-  const provider = subcategory
-    .replace("Uncapped", "")
-    .replace("Capped", "")
-    .trim();
-  return { productCode, productName, productRate, provider, id, subcategory };
-};
-
-export const getProductsFromPromo = (
-  promo: ProductPromoCode
-): ProductSummary[] => {
-  return promo.products.map(getSummarizedProduct);
-};
-
 export type PriceRange = {
   min: number;
   max?: number;
 };
 
-type ProductFilters = {
+export type ProductFilters = {
   selectedProviders: string[];
   selectedPriceRanges: PriceRange[];
-};
-
-export const applyFiltersOnProducts = (
-  products: ProductSummary[],
-  filters: ProductFilters
-) => {
-  const { selectedProviders: providers, selectedPriceRanges } = filters;
-
-  const selectedProviders = new Set(providers);
-
-  return products
-    .filter((p) => {
-      if (providers.length === 0) {
-        return true;
-      }
-      return selectedProviders.has(p.subcategory);
-    })
-    .filter((p) => filterByPriceRanges(p, selectedPriceRanges));
-};
-
-const isPriceWithinRange = (
-  price: number,
-  min: number,
-  max: number | undefined
-): boolean => {
-  return max === undefined ? price >= min : price >= min && price <= max;
-};
-
-const isAnyPriceRangeSelected = (
-  selectedPriceRanges: PriceRange[]
-): boolean => {
-  return selectedPriceRanges.length === 0;
-};
-
-export const filterByPriceRanges = (
-  product: ProductSummary,
-  selectedPriceRanges: PriceRange[]
-): boolean => {
-  if (isAnyPriceRangeSelected(selectedPriceRanges)) {
-    return true;
-  }
-
-  return selectedPriceRanges.some((range) =>
-    isPriceWithinRange(product.productRate, range.min, range.max)
-  );
-};
-
-export const generatePromoCodeProductsURL = (promocodes: string[]) => {
-  return `${MWEB_BASE_URL}/marketing/products/promos/${promocodes.join(
-    ","
-  )}?sellable_online=true`;
-};
-
-export const fetchProducts = (
-  promoCodes: string[]
-): Promise<ProductPromoResponse> =>
-  axios
-    .get<ProductPromoResponse>(generatePromoCodeProductsURL(promoCodes))
-    .then((response) => response.data);
-
-export const useProducts = (params: {
-  promoCodes: string[];
-  filters: ProductFilters;
-}) => {
-  const { promoCodes, filters } = params;
-
-  const promoProductsQuery = useQuery({
-    queryKey: ["promoProducts", promoCodes],
-    queryFn: () => fetchProducts(promoCodes),
-    enabled: !!promoCodes.length,
-  });
-
-  const { data } = promoProductsQuery;
-  const products = data ? data.map(getProductsFromPromo).flat() : undefined;
-
-  // Remove duplicates
-  const uniqueProducts =
-    products?.filter(
-      (value, index, self) => self.findIndex((m) => m.id === value.id) === index
-    ) || [];
-
-  const filteredProducts = applyFiltersOnProducts(uniqueProducts, filters);
-
-  return {
-    products: filteredProducts,
-    ...promoProductsQuery,
-  };
 };

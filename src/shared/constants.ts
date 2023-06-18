@@ -1,4 +1,4 @@
-import { type PriceRange } from "@/components/products/productHooks";
+import { type PriceRange } from "@/components/products/types";
 
 export const MWEB_BASE_URL = "https://apigw.mweb.co.za/prod/baas/proxy";
 
@@ -13,5 +13,5 @@ export const PRICE_FILTER_RANGES: PriceRange[] = [
   },
   {
     min: 1000,
-  }
+  },
 ];

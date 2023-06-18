@@ -1,4 +1,4 @@
-import { type ProductSummary } from "./productHooks";
+import { type ProductSummary } from "./types";
 
 type ProductCardListProps = {
   products?: ProductSummary[];

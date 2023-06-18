@@ -1,4 +1,4 @@
-import { type Campaign } from "./campaignHooks";
+import { type Campaign } from "./hooks";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 

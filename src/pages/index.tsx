@@ -3,9 +3,9 @@ import {
   type Campaign,
   fetchCampaigns,
   useCampaigns,
-} from "@/components/campaigns/campaignHooks";
+} from "@/components/campaigns/hooks";
 import { ProductCardList } from "@/components/products/ProductCardList";
-import { useProducts } from "@/components/products/productHooks";
+import { useProducts } from "@/components/products/hooks";
 import { providerInfo } from "@/components/providers/providerInfo";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
