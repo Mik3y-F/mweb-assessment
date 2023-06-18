@@ -123,6 +123,7 @@ export type ProductSummary = {
   productName: string;
   productRate: number;
   provider: string;
+  subcategory: string;
   id: string;
 };
 
@@ -137,13 +138,68 @@ export const getSummarizedProduct = ({
     .replace("Uncapped", "")
     .replace("Capped", "")
     .trim();
-  return { productCode, productName, productRate, provider, id };
+  return { productCode, productName, productRate, provider, id, subcategory };
 };
 
 export const getProductsFromPromo = (
   promo: ProductPromoCode
 ): ProductSummary[] => {
   return promo.products.map(getSummarizedProduct);
+};
+
+export type PriceRange = {
+  min: number;
+  max?: number;
+};
+
+type ProductFilters = {
+  selectedProviders: string[];
+  selectedPriceRanges: PriceRange[];
+};
+
+export const applyFiltersOnProducts = (
+  products: ProductSummary[],
+  filters: ProductFilters
+) => {
+  const { selectedProviders: providers, selectedPriceRanges } = filters;
+
+  const selectedProviders = new Set(providers);
+
+  return products
+    .filter((p) => {
+      if (providers.length === 0) {
+        return true;
+      }
+      return selectedProviders.has(p.subcategory);
+    })
+    .filter((p) => filterByPriceRanges(p, selectedPriceRanges));
+};
+
+const isPriceWithinRange = (
+  price: number,
+  min: number,
+  max: number | undefined
+): boolean => {
+  return max === undefined ? price >= min : price >= min && price <= max;
+};
+
+const isAnyPriceRangeSelected = (
+  selectedPriceRanges: PriceRange[]
+): boolean => {
+  return selectedPriceRanges.length === 0;
+};
+
+export const filterByPriceRanges = (
+  product: ProductSummary,
+  selectedPriceRanges: PriceRange[]
+): boolean => {
+  if (isAnyPriceRangeSelected(selectedPriceRanges)) {
+    return true;
+  }
+
+  return selectedPriceRanges.some((range) =>
+    isPriceWithinRange(product.productRate, range.min, range.max)
+  );
 };
 
 export const generatePromoCodeProductsURL = (promocodes: string[]) => {
@@ -159,8 +215,11 @@ export const fetchProducts = (
     .get<ProductPromoResponse>(generatePromoCodeProductsURL(promoCodes))
     .then((response) => response.data);
 
-export const useProducts = (params: { promoCodes: string[] }) => {
-  const { promoCodes } = params;
+export const useProducts = (params: {
+  promoCodes: string[];
+  filters: ProductFilters;
+}) => {
+  const { promoCodes, filters } = params;
 
   const promoProductsQuery = useQuery({
     queryKey: ["promoProducts", promoCodes],
@@ -172,12 +231,15 @@ export const useProducts = (params: { promoCodes: string[] }) => {
   const products = data ? data.map(getProductsFromPromo).flat() : undefined;
 
   // Remove duplicates
-  const uniqueProducts = products?.filter(
-    (value, index, self) => self.findIndex((m) => m.id === value.id) === index
-  );
+  const uniqueProducts =
+    products?.filter(
+      (value, index, self) => self.findIndex((m) => m.id === value.id) === index
+    ) || [];
+
+  const filteredProducts = applyFiltersOnProducts(uniqueProducts, filters);
 
   return {
-    products: uniqueProducts,
+    products: filteredProducts,
     ...promoProductsQuery,
   };
 };

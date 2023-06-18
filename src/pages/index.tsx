@@ -27,6 +27,10 @@ const Home = (
 
   const { products } = useProducts({
     promoCodes: selectedCampaign?.promocodes || [],
+    filters: {
+      selectedPriceRanges: [],
+      selectedProviders: [],
+    },
   });
 
   const handleSelectedCampaignChange = (value: string) => {
