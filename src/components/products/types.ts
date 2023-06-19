@@ -125,6 +125,8 @@ export type ProductSummary = {
 export type PriceRange = {
   min: number;
   max?: number;
+  selected: boolean;
+  id: number;
 };
 
 export type ProductFilters = {

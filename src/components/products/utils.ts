@@ -6,6 +6,26 @@ import {
   type PriceRange,
 } from "./types";
 
+export const PRICE_FILTER_RANGES: PriceRange[] = [
+  {
+    id: 1,
+    min: 0,
+    selected: true,
+    max: 699,
+  },
+  {
+    id: 2,
+    min: 700,
+    max: 999,
+    selected: false,
+  },
+  {
+    id: 3,
+    min: 1000,
+    selected: false,
+  },
+];
+
 export const getSummarizedProduct = ({
   productCode,
   productName,

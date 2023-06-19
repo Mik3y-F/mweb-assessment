@@ -3,9 +3,12 @@ import {
   type Campaign,
   fetchCampaigns,
   useCampaigns,
-} from "@/components/campaigns/hooks";
+} from "@/components/campaigns/campaignHooks";
+import { PriceRangeFilter } from "@/components/products/PriceRangeFilter";
 import { ProductCardList } from "@/components/products/ProductCardList";
 import { useProducts } from "@/components/products/hooks";
+import { type PriceRange } from "@/components/products/types";
+import { PRICE_FILTER_RANGES } from "@/components/products/utils";
 import { providerInfo } from "@/components/providers/providerInfo";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
@@ -25,10 +28,13 @@ const Home = (
     Campaign | undefined
   >(campaignRes.campaigns[0]);
 
+  const [priceRanges, setPriceRanges] =
+    useState<PriceRange[]>(PRICE_FILTER_RANGES);
+
   const { products } = useProducts({
     promoCodes: selectedCampaign?.promocodes || [],
     filters: {
-      selectedPriceRanges: [],
+      selectedPriceRanges: priceRanges.filter((range) => range.selected),
       selectedProviders: [],
     },
   });
@@ -38,6 +44,16 @@ const Home = (
       (campaign) => campaign.code === value
     );
     setSelectedCampaign(campaign);
+  };
+
+  const handleSelectedPriceRangesChange = (value: PriceRange) => {
+    const newPriceRanges = priceRanges.map((range) => {
+      if (range.id === value.id) {
+        return { ...range, selected: !range.selected };
+      }
+      return range;
+    });
+    setPriceRanges(newPriceRanges);
   };
 
   return (
@@ -74,6 +90,10 @@ const Home = (
             campaigns={campaignData?.campaigns || []}
           />
         </div>
+        <PriceRangeFilter
+          priceRanges={priceRanges}
+          handleSelectedPriceRangesChange={handleSelectedPriceRangesChange}
+        />
         <ProductCardList products={products} />
       </div>
     </>
