@@ -24,7 +24,7 @@ export function ProductCardList(props: ProductCardListProps) {
 
   const [animationParent] = useAutoAnimate();
 
-  const getProviderLink = (provider: string) => {
+  const getProviderImageSrcLink = (provider: string) => {
     return providerInfo.find((p) => p.name === provider)?.url || "";
   };
 
@@ -85,7 +85,7 @@ export function ProductCardList(props: ProductCardListProps) {
                 <div className="flex w-full justify-between">
                   <div>
                     <Image
-                      src={getProviderLink(product.provider)}
+                      src={getProviderImageSrcLink(product.provider)}
                       alt={product.provider}
                       height={90}
                       width={90}

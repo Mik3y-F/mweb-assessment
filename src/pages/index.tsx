@@ -12,7 +12,7 @@ import Head from "next/head";
 const Home = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
 ) => {
-  const { campaignRes: preloadedCampaignResponse } = props;
+  const { preloadedCampaignResponse } = props;
   const {
     products,
     productsQuery,
@@ -91,7 +91,7 @@ export default Home;
 
 export const getServerSideProps = async () => {
   // It's better UX to fetch campaigns on the server side so that the page is rendered with the filters
-  const campaignRes = await fetchCampaigns();
+  const preloadedCampaignResponse = await fetchCampaigns();
 
-  return { props: { campaignRes } };
+  return { props: { preloadedCampaignResponse } };
 };
