@@ -36,10 +36,13 @@ const Home = (
         <meta name="description" content="Mweb Fibre Products" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-full min-h-screen w-full bg-slate-100 px-4 text-center md:px-16">
-        <h1 className="py-2 pt-10 text-4xl font-bold">
-          Fibre products
-        </h1>
+      <div
+        className="h-full min-h-screen w-full bg-slate-100 px-4 text-center md:px-10"
+        style={{
+          backgroundImage: `url(/sprinkle.svg)`,
+        }}
+      >
+        <h1 className="py-2 pt-10 text-4xl font-bold">Fibre products</h1>
         <div className="text pb-8 pt-2">
           Pick a fibre provider, explore their products and complete a coverage
           search.

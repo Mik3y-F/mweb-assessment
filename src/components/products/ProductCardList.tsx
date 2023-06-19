@@ -61,12 +61,12 @@ export function ProductCardList(props: ProductCardListProps) {
                   </div>
                   <div className="flex flex-wrap gap-2 md:gap-4">
                     <NetSpeedCard
-                      type="upload"
-                      speed={product.netSpeeds.upload}
-                    />
-                    <NetSpeedCard
                       type="download"
                       speed={product.netSpeeds.download}
+                    />
+                    <NetSpeedCard
+                      type="upload"
+                      speed={product.netSpeeds.upload}
                     />
                   </div>
                 </div>
@@ -140,7 +140,7 @@ function NetSpeedCard(props: NetSpeedCardProps) {
       </div>
       <div className="flex gap-2 md:gap-4">
         <div>
-          <span className="pr-2 text-xl font-bold md:text-3xl">{speed}</span>
+          <span className="pr-2 text-xl font-bold md:text-2xl">{speed}</span>
           <span>MBPS</span>
         </div>
         <div>

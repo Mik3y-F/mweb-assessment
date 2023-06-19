@@ -12,7 +12,7 @@ export const providerInfo: Provider[] = [
     code: "frogfoot",
     name: "Frogfoot",
     url: `${logoBaseURL}/provider-frogfoot.png`,
-    selected: true,
+    selected: false,
   },
   {
     code: "centurycity",

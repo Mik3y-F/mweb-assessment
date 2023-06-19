@@ -12,7 +12,7 @@ export const PRICE_FILTER_RANGES: PriceRange[] = [
   {
     id: 1,
     min: 0,
-    selected: true,
+    selected: false,
     max: 699,
   },
   {
