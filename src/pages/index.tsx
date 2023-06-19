@@ -37,7 +37,7 @@ const Home = (
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="h-full min-h-screen w-full bg-slate-100 px-4 text-center md:px-16">
-        <h1 className="py-2 pt-16 text-4xl font-bold md:pt-28">
+        <h1 className="py-2 pt-10 text-4xl font-bold">
           Fibre products
         </h1>
         <div className="text pb-8 pt-2">
