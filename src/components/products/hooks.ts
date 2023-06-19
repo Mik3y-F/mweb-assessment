@@ -113,6 +113,17 @@ export const useProductSelection = (
     setProviders(newProviders);
   };
 
+  const handleClearSelectedFilters = () => {
+    const newPriceRanges = priceRanges.map((range) => {
+      return { ...range, selected: false };
+    });
+    const newProviders = providers.map((provider) => {
+      return { ...provider, selected: false };
+    });
+    setPriceRanges(newPriceRanges);
+    setProviders(newProviders);
+  };
+
   return {
     products,
     productsQuery,
@@ -126,5 +137,6 @@ export const useProductSelection = (
     handleSelectedCampaignChange,
     handleSelectedPriceRangesChange,
     handleSelectedProvidersChange,
+    handleClearSelectedFilters,
   };
 };

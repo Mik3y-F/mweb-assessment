@@ -4,10 +4,10 @@ import { ProductCardList } from "@/components/products/ProductCardList";
 import { ProductFilterMenuBar } from "@/components/products/ProductFilterMenuBar";
 import { useProductSelection } from "@/components/products/hooks";
 import { ProviderPicker } from "@/components/providers/ProviderPicker";
+import { Button } from "@/components/ui/button";
+import { XCircle } from "lucide-react";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-
-// TODO: Add a ui loading and error state for the queries (campaign and products)
 
 const Home = (
   props: InferGetServerSidePropsType<typeof getServerSideProps>
@@ -26,6 +26,7 @@ const Home = (
     handleSelectedCampaignChange,
     handleSelectedPriceRangesChange,
     handleSelectedProvidersChange,
+    handleClearSelectedFilters,
   } = useProductSelection(preloadedCampaignResponse);
 
   return (
@@ -55,13 +56,21 @@ const Home = (
               campaigns={campaignQuery.data?.campaigns || []}
             />
           </div>
-          <div>
+          <div className="flex flex-wrap">
             <ProductFilterMenuBar
               priceRanges={priceRanges}
               handleSelectedPriceRangesChange={handleSelectedPriceRangesChange}
               providers={providers}
               handleSelectedProvidersChange={handleSelectedProvidersChange}
             />
+            <Button
+              className="gap-1 font-bold"
+              variant={"ghost"}
+              onClick={handleClearSelectedFilters}
+            >
+              <XCircle size={20} />
+              Clear
+            </Button>
           </div>
         </div>
 
