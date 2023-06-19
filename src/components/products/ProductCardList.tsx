@@ -1,17 +1,26 @@
-import { Check, DownloadCloud, SearchX, UploadCloud } from "lucide-react";
+import {
+  Check,
+  DownloadCloud,
+  SearchX,
+  UploadCloud,
+  XCircle,
+} from "lucide-react";
 import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type ProductSummary } from "./types";
 import { providerInfo } from "../providers/providerInfo";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 
 type ProductCardListProps = {
   products?: ProductSummary[];
+  isLoading?: boolean;
+  isError?: boolean;
 };
 
 export function ProductCardList(props: ProductCardListProps) {
-  const { products } = props;
+  const { products, isLoading, isError } = props;
 
   const [animationParent] = useAutoAnimate();
 
@@ -21,7 +30,7 @@ export function ProductCardList(props: ProductCardListProps) {
 
   return (
     <div className="h-full w-full">
-      {products?.length === 0 && (
+      {products?.length === 0 && (!isLoading || !isError) && (
         <div className="p-20 text-center md:p-40">
           <div className="my-auto text-xl font-semibold text-slate-300 md:text-3xl">
             No products found
@@ -87,6 +96,23 @@ export function ProductCardList(props: ProductCardListProps) {
               </CardFooter>
             </Card>
           ))}
+        </div>
+      )}
+      {isLoading && (
+        <div className="grid h-full w-full gap-6 py-8 pt-4 lg:grid-cols-2">
+          {Array(8)
+            .fill(0)
+            .map((_, index) => (
+              <Skeleton key={index} className="h-40 w-full bg-slate-200" />
+            ))}
+        </div>
+      )}
+      {isError && (
+        <div className="p-20 text-center md:p-40">
+          <div className="my-auto text-xl font-semibold text-slate-300 md:text-3xl">
+            Unexpected Error Occurred
+          </div>
+          <XCircle className="mx-auto mt-4 text-slate-300" size={40} />
         </div>
       )}
     </div>

@@ -15,6 +15,7 @@ const Home = (
   const { campaignRes: preloadedCampaignResponse } = props;
   const {
     products,
+    productsQuery,
 
     selectedCampaign,
     campaignQuery,
@@ -64,7 +65,11 @@ const Home = (
           </div>
         </div>
 
-        <ProductCardList products={products} />
+        <ProductCardList
+          products={products}
+          isLoading={productsQuery.isLoading || campaignQuery.isLoading}
+          isError={productsQuery.isError || campaignQuery.isError}
+        />
       </div>
     </>
   );
