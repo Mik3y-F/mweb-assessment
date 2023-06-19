@@ -9,10 +9,16 @@ export type Provider = {
 
 export const providerInfo: Provider[] = [
   {
+    code: "frogfoot",
+    name: "Frogfoot",
+    url: `${logoBaseURL}/provider-frogfoot.png`,
+    selected: true,
+  },
+  {
     code: "centurycity",
     name: "Century City Connect",
     url: `${logoBaseURL}/provider-century.png`,
-    selected: true,
+    selected: false,
   },
   {
     code: "evotel",
@@ -36,12 +42,6 @@ export const providerInfo: Provider[] = [
     code: "openserve",
     name: "Openserve",
     url: `${logoBaseURL}/provider-openserve.png`,
-    selected: false,
-  },
-  {
-    code: "frogfoot",
-    name: "Frogfoot",
-    url: `${logoBaseURL}/provider-frogfoot.png`,
     selected: false,
   },
   {

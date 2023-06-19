@@ -1,6 +1,13 @@
 import { type Campaign } from "./hooks";
-import { Label } from "../ui/label";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type CampaignPickerProps = {
   selectedCampaign?: string;
@@ -12,20 +19,25 @@ export default function CampaignPicker(props: CampaignPickerProps) {
   const { selectedCampaign, handleSelectedCampaignChange, campaigns } = props;
 
   return (
-    <div>
-      <div className="mb-2">Select a campaign</div>
-      <RadioGroup
-        defaultValue={selectedCampaign}
+    <div className="max-w-sm">
+      <Select
         onValueChange={handleSelectedCampaignChange}
-        className="mx-auto w-full max-w-xs"
+        defaultValue={selectedCampaign}
       >
-        {campaigns.map((campaign) => (
-          <div key={campaign.code} className="flex items-center space-x-2">
-            <RadioGroupItem value={campaign.code} id={campaign.code} />
-            <Label htmlFor={campaign.code}>{campaign.name}</Label>
-          </div>
-        ))}
-      </RadioGroup>
+        <SelectTrigger className="min-w-max max-w-md gap-4 bg-white px-4 shadow-sm">
+          <SelectValue placeholder="Pick a campaign" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Campaigns</SelectLabel>
+            {campaigns.map((campaign) => (
+              <SelectItem value={campaign.code} key={campaign.code}>
+                {campaign.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   );
 }

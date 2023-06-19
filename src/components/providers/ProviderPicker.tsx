@@ -2,7 +2,7 @@ import { CheckCheck } from "lucide-react";
 import { type Provider } from "./providerInfo";
 import Image from "next/image";
 
-type ProviderPickerProps = {
+export type ProviderPickerProps = {
   providers: Provider[];
   handleSelectedProvidersChange: (value: Provider) => void;
 };
@@ -11,7 +11,7 @@ export function ProviderPicker(props: ProviderPickerProps) {
   const { providers, handleSelectedProvidersChange } = props;
 
   return (
-    <div className="mx-auto flex w-full justify-center gap-6">
+    <div className="mx-auto flex w-full flex-wrap justify-center gap-6 text-center">
       {providers.map((provider) => (
         <div
           key={provider.code}
@@ -28,7 +28,7 @@ export function ProviderPicker(props: ProviderPickerProps) {
             />
           </div>
           {provider.selected && (
-            <div className="absolute -left-3 -top-2 z-50 rounded-full bg-green-600">
+            <div className="absolute -left-3 -top-2 z-50 rounded-full bg-blue-600">
               <CheckCheck className="p-0.5 text-slate-50" size={17} />
             </div>
           )}

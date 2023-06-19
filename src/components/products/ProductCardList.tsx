@@ -1,10 +1,4 @@
-import {
-  ArrowDown,
-  ArrowUp,
-  Check,
-  DownloadCloud,
-  UploadCloud,
-} from "lucide-react";
+import { Check, DownloadCloud, UploadCloud } from "lucide-react";
 import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { type ProductSummary } from "./types";
@@ -24,17 +18,16 @@ export function ProductCardList(props: ProductCardListProps) {
 
   return (
     <div>
-      <div>Product list</div>
-      <div className="grid md:grid-cols-2 gap-6 p-8">
+      <div className="grid gap-6 py-8 pt-4 lg:grid-cols-2">
         {products?.map((product) => (
           // Was having issues with the id as key prop here, so added productCode (Duplicate ids)
           <Card
             key={`${product.id}-${product.productCode}`}
             className="text-left"
           >
-            <CardHeader>
-              <div className="flex w-full justify-between">
-                <div>
+            <CardHeader className="p-4">
+              <div className="flex w-full flex-wrap justify-between">
+                <div className="pb-4 md:pb-0">
                   <div className="text-2xl font-semibold text-slate-800">
                     {product.friendlyName}
                   </div>
@@ -42,7 +35,7 @@ export function ProductCardList(props: ProductCardListProps) {
                     R{product.productRate} pm
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-2 md:gap-4">
                   <NetSpeedCard type="upload" />
                   <NetSpeedCard type="download" />
                 </div>
@@ -71,7 +64,7 @@ export function ProductCardList(props: ProductCardListProps) {
                 </div>
                 <Button
                   size={"lg"}
-                  className="bg-gradient-to-r from-orange-700 to-red-600 text-slate-50"
+                  className="bg-gradient-to-r from-red-700 to-red-600 text-slate-50"
                 >
                   Check Coverage
                 </Button>
@@ -93,12 +86,12 @@ function NetSpeedCard(props: NetSpeedCardProps) {
 
   return (
     <div className="rounded-md border border-slate-300 p-4 px-6">
-      <div className="text-sm">
+      <div className="text-xs md:text-sm">
         {type === "download" ? "Download" : "Upload"}
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-2 md:gap-4">
         <div>
-          <span className="pr-2 text-3xl font-bold">10</span>
+          <span className="pr-2 text-xl font-bold md:text-3xl">10</span>
           <span>MBPS</span>
         </div>
         <div>

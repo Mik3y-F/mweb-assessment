@@ -1,6 +1,5 @@
 import { type PriceRange } from "./types";
-import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
+import { MenubarCheckboxItem } from "../ui/menubar";
 
 type PriceRangeFilterProps = {
   priceRanges: PriceRange[];
@@ -16,20 +15,16 @@ export function PriceRangeFilter(props: PriceRangeFilterProps) {
   };
 
   return (
-    <div className="mx-auto my-10 flex w-fit space-x-6 text-center">
+    <div className="">
       {priceRanges.map((priceRange, idx) => (
-        <div className="flex items-center space-x-2" key={idx}>
-          <Checkbox
+        <div className="" key={idx}>
+          <MenubarCheckboxItem
             id="price-range"
             checked={priceRange.selected}
             onCheckedChange={() => handleSelectedPriceRangesChange(priceRange)}
-          />
-          <Label
-            htmlFor="price-range"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             {generatePriceRangeLabel(priceRange)}
-          </Label>
+          </MenubarCheckboxItem>
         </div>
       ))}
     </div>
