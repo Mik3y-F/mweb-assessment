@@ -3,7 +3,7 @@ import {
   type Campaign,
   fetchCampaigns,
   useCampaigns,
-} from "@/components/campaigns/campaignHooks";
+} from "@/components/campaigns/hooks";
 import { PriceRangeFilter } from "@/components/products/PriceRangeFilter";
 import { ProductCardList } from "@/components/products/ProductCardList";
 import { useProducts } from "@/components/products/hooks";
