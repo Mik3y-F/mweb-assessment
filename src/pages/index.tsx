@@ -1,18 +1,9 @@
 import CampaignPicker from "@/components/campaigns/CampaignPicker";
 import { fetchCampaigns } from "@/components/campaigns/hooks";
-import { PriceRangeFilter } from "@/components/products/PriceRangeFilter";
 import { ProductCardList } from "@/components/products/ProductCardList";
+import { ProductFilterMenuBar } from "@/components/products/ProductFilterMenuBar";
 import { useProductSelection } from "@/components/products/hooks";
-import { ProviderFilter } from "@/components/providers/ProviderFilter";
 import { ProviderPicker } from "@/components/providers/ProviderPicker";
-import { Badge } from "@/components/ui/badge";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import { Building2, Coins, ListFilter } from "lucide-react";
 import { type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 
@@ -36,14 +27,6 @@ const Home = (
     handleSelectedProvidersChange,
   } = useProductSelection(preloadedCampaignResponse);
 
-  const selectedPriceRanges = () => {
-    return priceRanges.filter((priceRange) => priceRange.selected);
-  };
-
-  const selectedProviders = () => {
-    return providers.filter((provider) => provider.selected);
-  };
-
   return (
     <>
       <Head>
@@ -51,8 +34,10 @@ const Home = (
         <meta name="description" content="Mweb Fibre Products" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-full min-h-screen bg-slate-100 px-4 md:px-16 text-center">
-        <h1 className="py-2 pt-16 md:pt-28 text-3xl font-bold">Fibre products</h1>
+      <div className="h-full min-h-screen bg-slate-100 px-4 text-center md:px-16">
+        <h1 className="py-2 pt-16 text-3xl font-bold md:pt-28">
+          Fibre products
+        </h1>
         <div className="text pb-8 pt-2">
           Pick a fibre provider, explore their products and complete a coverage
           search.
@@ -61,7 +46,7 @@ const Home = (
           providers={providers}
           handleSelectedProvidersChange={handleSelectedProvidersChange}
         />
-        <div className="flex flex-wrap gap-2 md:gap-8 pt-4">
+        <div className="flex flex-wrap gap-2 pt-4 md:gap-8">
           <div className="w-1/6 min-w-fit">
             <CampaignPicker
               selectedCampaign={selectedCampaign?.code}
@@ -69,48 +54,13 @@ const Home = (
               campaigns={campaignQuery.data?.campaigns || []}
             />
           </div>
-          <div className="flex gap-2">
-            <Menubar>
-              <ListFilter size={20}  />
-              <MenubarMenu>
-                <MenubarTrigger>
-                  <div className="flex gap-2 ">
-                    <Coins size={18} />
-                    <div className="text-sm whitespace-nowrap">Price Range</div>
-                    <Badge className="bg-green-600 text-xs">
-                      {selectedPriceRanges().length}
-                    </Badge>
-                  </div>
-                </MenubarTrigger>
-                <MenubarContent className="w-full">
-                  <PriceRangeFilter
-                    priceRanges={priceRanges}
-                    handleSelectedPriceRangesChange={
-                      handleSelectedPriceRangesChange
-                    }
-                  />
-                </MenubarContent>
-              </MenubarMenu>
-              <MenubarMenu>
-                <MenubarTrigger>
-                  <div className="flex gap-2 ">
-                    <Building2 size={18} />
-                    <div className="text-sm">Providers</div>
-                    <Badge className="bg-green-600 text-xs">
-                      {selectedProviders().length}
-                    </Badge>
-                  </div>
-                </MenubarTrigger>
-                <MenubarContent className="w-full">
-                  <ProviderFilter
-                    providers={providers}
-                    handleSelectedProvidersChange={
-                      handleSelectedProvidersChange
-                    }
-                  />
-                </MenubarContent>
-              </MenubarMenu>
-            </Menubar>
+          <div>
+            <ProductFilterMenuBar
+              priceRanges={priceRanges}
+              handleSelectedPriceRangesChange={handleSelectedPriceRangesChange}
+              providers={providers}
+              handleSelectedProvidersChange={handleSelectedProvidersChange}
+            />
           </div>
         </div>
 
