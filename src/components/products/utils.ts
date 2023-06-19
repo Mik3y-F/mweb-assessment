@@ -1,7 +1,7 @@
 import {
   type ProductPromoCode,
   type Product,
-  type ProductSummary,
+  type ProductSummary as FormattedProduct,
   type ProductFilters,
   type PriceRange,
 } from "./types";
@@ -26,28 +26,23 @@ export const PRICE_FILTER_RANGES: PriceRange[] = [
   },
 ];
 
-export const getSummarizedProduct = ({
-  productCode,
-  productName,
-  productRate,
-  subcategory,
-  id,
-}: Product): ProductSummary => {
+export const formatProductResponse = (product: Product): FormattedProduct => {
+  const { subcategory } = product;
   const provider = subcategory
     .replace("Uncapped", "")
     .replace("Capped", "")
     .trim();
-  return { productCode, productName, productRate, provider, id, subcategory };
+  return { ...product, provider };
 };
 
 export const getProductsFromPromo = (
   promo: ProductPromoCode
-): ProductSummary[] => {
-  return promo.products.map(getSummarizedProduct);
+): FormattedProduct[] => {
+  return promo.products.map(formatProductResponse);
 };
 
 export const applyFiltersOnProducts = (
-  products: ProductSummary[],
+  products: FormattedProduct[],
   filters: ProductFilters
 ) => {
   const { selectedProviders: providers, selectedPriceRanges } = filters;
@@ -59,7 +54,7 @@ export const applyFiltersOnProducts = (
       if (providers.length === 0) {
         return true;
       }
-      return selectedProviders.has(p.subcategory);
+      return selectedProviders.has(p.provider);
     })
     .filter((p) => filterByPriceRanges(p, selectedPriceRanges));
 };
@@ -79,7 +74,7 @@ const isAnyPriceRangeSelected = (
 };
 
 export const filterByPriceRanges = (
-  product: ProductSummary,
+  product: FormattedProduct,
   selectedPriceRanges: PriceRange[]
 ): boolean => {
   if (isAnyPriceRangeSelected(selectedPriceRanges)) {

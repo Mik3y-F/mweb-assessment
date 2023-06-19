@@ -1,3 +1,4 @@
+import { Card, CardContent, CardHeader } from "../ui/card";
 import { type ProductSummary } from "./types";
 
 type ProductCardListProps = {
@@ -9,13 +10,21 @@ export function ProductCardList(props: ProductCardListProps) {
   return (
     <div>
       <div>Product list</div>
-      {products?.map((product) => (
-        // Was having issues with the id as key prop here, so added productCode (Duplicate ids)
-        <div key={`${product.id}-${product.productCode}`} className="my-4">
-          <div className="text-2xl font-semibold">{product.productName}</div>
-          <div className="text-sm">{product.provider}</div>
-        </div>
-      ))}
+      <div className="grid grid-cols-2 gap-6 p-8">
+        {products?.map((product) => (
+          // Was having issues with the id as key prop here, so added productCode (Duplicate ids)
+          <Card key={`${product.id}-${product.productCode}`} className="">
+            <CardHeader>
+              <div className="text-2xl font-semibold">
+                {product.productName}
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="text-sm">{product.provider}</div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }

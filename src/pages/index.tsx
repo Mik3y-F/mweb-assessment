@@ -34,7 +34,7 @@ const Home = (
         <meta name="description" content="Mweb Fibre Products" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="text-center">
+      <div className="h-screen bg-slate-50 text-center">
         <h1 className="my-2 text-3xl font-bold">Fibre products</h1>
         <div className="text mb-4 mt-2">
           Select a fibre infrastructure provider below, browse the products

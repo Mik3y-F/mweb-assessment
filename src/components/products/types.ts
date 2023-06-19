@@ -113,13 +113,8 @@ export type SupportedLocationLookupTypes = {
   FULL_ADDRESS: boolean;
 };
 
-export type ProductSummary = {
-  productCode: string;
-  productName: string;
-  productRate: number;
+export type ProductSummary = Product & {
   provider: string;
-  subcategory: string;
-  id: string;
 };
 
 export type PriceRange = {
