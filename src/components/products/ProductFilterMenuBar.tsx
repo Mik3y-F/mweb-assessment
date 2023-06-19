@@ -36,7 +36,7 @@ export function ProductFilterMenuBar(props: ProductFilterMenuBarProps) {
 
   return (
     <Menubar>
-      <ListFilter size={20} />
+      <ListFilter size={20} className="md:mx-1" />
       <MenubarMenu>
         <MenubarTrigger>
           <div className="flex gap-2 ">
