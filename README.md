@@ -22,7 +22,7 @@ The application is built using the following technologies:
 
 To run the application locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-repo.git`
+1. Clone the repository: `git clone git@github.com:Mik3y-F/mweb-assessment.git`
 2. Install the dependencies: `npm install`
 3. Start the development server: `npm run dev`
 4. Open your browser and navigate to `http://localhost:3000`
@@ -42,3 +42,5 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+**Note:** Please be aware that comprehensive test suites were compromised on due to time constraints. If given more time, I would add thorough testing to ensure the application's reliability and stability.
