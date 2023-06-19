@@ -95,7 +95,7 @@ function convertToMbps(speed: string): number {
   return Math.floor(speedInMbps);
 }
 
-function extractSpeedsFromProductParams(params: Parameter[]): NetSpeeds {
+export function extractSpeedsFromProductParams(params: Parameter[]): NetSpeeds {
   const speeds: NetSpeeds = {
     download: "0",
     upload: "0",

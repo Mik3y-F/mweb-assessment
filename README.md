@@ -1,28 +1,44 @@
-# Create T3 App
+# Mweb Fibre Product Browser
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This is a web application built with Next.js, React Query, Tailwind CSS, and deployed on Vercel. The purpose of this application is to browse Mweb's Fibre products and provide filtering options based on providers and price range.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Fetches Fibre products from the API for all providers.
+- Displays icons for each provider to easily identify them.
+- Allows users to select multiple providers and filters the displayed products accordingly.
+- Provides a price range filter to narrow down the product selection as well as a campaign filter.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Technologies Used
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+The application is built using the following technologies:
 
-## Learn More
+- **Next.js**: A React framework for server-side rendering and building optimized web applications.
+- **React Query**: A data-fetching library for managing API data and caching.
+- **Tailwind CSS**: A utility-first CSS framework for building custom and responsive user interfaces.
+- **Vercel**: A cloud platform for deploying and hosting web applications with ease.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Getting Started
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+To run the application locally, follow these steps:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+1. Clone the repository: `git clone https://github.com/your-repo.git`
+2. Install the dependencies: `npm install`
+3. Start the development server: `npm run dev`
+4. Open your browser and navigate to `http://localhost:3000`
 
-## How do I deploy this?
+## Deployment
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+The application is deployed on Vercel. You can access it using the following link: [App Link](https://mweb-assessment-roan.vercel.app/)
+
+## API Documentation
+
+The application utilizes an API to fetch the Fibre products. You can find the API documentation and endpoints at [API Documentation](https://observablehq.com/@mweb/exploring-mwebs-fibre-apis)
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvement, please create a new issue or submit a pull request.
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
