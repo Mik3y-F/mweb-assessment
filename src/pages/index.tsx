@@ -34,7 +34,7 @@ const Home = (
         <meta name="description" content="Mweb Fibre Products" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="h-full min-h-screen bg-slate-100 px-4 text-center md:px-16">
+      <div className="h-full min-h-screen w-full bg-slate-100 px-4 text-center md:px-16">
         <h1 className="py-2 pt-16 text-3xl font-bold md:pt-28">
           Fibre products
         </h1>
