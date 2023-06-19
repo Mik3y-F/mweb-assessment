@@ -4,6 +4,8 @@ import {
   type ProductSummary as FormattedProduct,
   type ProductFilters,
   type PriceRange,
+  type NetSpeeds,
+  type Parameter,
 } from "./types";
 
 export const PRICE_FILTER_RANGES: PriceRange[] = [
@@ -32,7 +34,8 @@ export const formatProductResponse = (product: Product): FormattedProduct => {
     .replace("Uncapped", "")
     .replace("Capped", "")
     .trim();
-  return { ...product, provider };
+  const netSpeeds = extractSpeedsFromProductParams(product.parameters);
+  return { ...product, provider, netSpeeds };
 };
 
 export const getProductsFromPromo = (
@@ -85,3 +88,26 @@ export const filterByPriceRanges = (
     isPriceWithinRange(product.productRate, range.min, range.max)
   );
 };
+
+function convertToMbps(speed: string): number {
+  const speedInKbps = parseFloat(speed);
+  const speedInMbps = speedInKbps / 1000;
+  return Math.floor(speedInMbps);
+}
+
+function extractSpeedsFromProductParams(params: Parameter[]): NetSpeeds {
+  const speeds: NetSpeeds = {
+    download: "0",
+    upload: "0",
+  };
+
+  for (const param of params) {
+    if (param.name === "downloadSpeed") {
+      speeds.download = `${convertToMbps(param.value)}`;
+    } else if (param.name === "uploadSpeed") {
+      speeds.upload = `${convertToMbps(param.value)}`;
+    }
+  }
+
+  return speeds;
+}

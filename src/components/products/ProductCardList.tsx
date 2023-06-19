@@ -30,7 +30,7 @@ export function ProductCardList(props: ProductCardListProps) {
 
   return (
     <div className="h-full w-full">
-      {products?.length === 0 && (!isLoading || !isError) && (
+      {products?.length === 0 && !isLoading && !isError && (
         <div className="p-20 text-center md:p-40">
           <div className="my-auto text-xl font-semibold text-slate-300 md:text-3xl">
             No products found
@@ -51,7 +51,7 @@ export function ProductCardList(props: ProductCardListProps) {
             >
               <CardHeader className="p-4 md:p-6">
                 <div className="flex w-full flex-wrap justify-between">
-                  <div className="pb-4 md:pb-0">
+                  <div className="pb-4">
                     <div className="text-2xl font-semibold text-slate-800">
                       {product.friendlyName}
                     </div>
@@ -60,8 +60,14 @@ export function ProductCardList(props: ProductCardListProps) {
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 md:gap-4">
-                    <NetSpeedCard type="upload" />
-                    <NetSpeedCard type="download" />
+                    <NetSpeedCard
+                      type="upload"
+                      speed={product.netSpeeds.upload}
+                    />
+                    <NetSpeedCard
+                      type="download"
+                      speed={product.netSpeeds.download}
+                    />
                   </div>
                 </div>
               </CardHeader>
@@ -121,10 +127,11 @@ export function ProductCardList(props: ProductCardListProps) {
 
 type NetSpeedCardProps = {
   type: "download" | "upload";
+  speed: string;
 };
 
 function NetSpeedCard(props: NetSpeedCardProps) {
-  const { type } = props;
+  const { type, speed } = props;
 
   return (
     <div className="rounded-md border border-slate-300 p-4 px-6">
@@ -133,7 +140,7 @@ function NetSpeedCard(props: NetSpeedCardProps) {
       </div>
       <div className="flex gap-2 md:gap-4">
         <div>
-          <span className="pr-2 text-xl font-bold md:text-3xl">10</span>
+          <span className="pr-2 text-xl font-bold md:text-3xl">{speed}</span>
           <span>MBPS</span>
         </div>
         <div>

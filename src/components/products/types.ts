@@ -115,6 +115,7 @@ export type SupportedLocationLookupTypes = {
 
 export type ProductSummary = Product & {
   provider: string;
+  netSpeeds: NetSpeeds;
 };
 
 export type PriceRange = {
@@ -128,3 +129,8 @@ export type ProductFilters = {
   selectedProviders: string[];
   selectedPriceRanges: PriceRange[];
 };
+
+export interface NetSpeeds {
+  upload: string;
+  download: string;
+}
